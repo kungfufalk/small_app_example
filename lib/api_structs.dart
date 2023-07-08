@@ -31,11 +31,11 @@ class CollectionItem {
 
 @JsonSerializable()
 class Category {
-  final ID id;
+  final ID? id;
   final String name;
   final ID? parentCategory;
 
-  Category(this.id, this.name, this.parentCategory);
+  Category(this.name,{this.id, this.parentCategory});
 
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
