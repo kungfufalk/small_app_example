@@ -3,12 +3,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'api_structs.g.dart';
 
 typedef ID = int;
-typedef Price = double;
+typedef Price = String;
+typedef Name = String;
 
 @JsonSerializable()
 class Collection {
   final ID id;
-  final String name;
+  final Name name;
 
   Collection(this.id, this.name);
 
@@ -31,11 +32,13 @@ class CollectionItem {
 
 @JsonSerializable()
 class Category {
+  @JsonKey(includeIfNull: true)
   final ID? id;
   final String name;
+  @JsonKey(includeIfNull: true)
   final ID? parentCategory;
 
-  Category(this.name,{this.id, this.parentCategory});
+  Category(this.id, this.name, this.parentCategory);
 
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
@@ -46,7 +49,7 @@ class Category {
 class Item {
   final ID id;
   final String name;
-  final ID? categoryId;
+  final ID categoryId;
   final Price price;
   final List<int> image;
 

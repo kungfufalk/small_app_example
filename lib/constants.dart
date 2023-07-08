@@ -1,1 +1,1 @@
-const baseUri = 'todo';
+const baseUri = 'http://192.168.100.25:8080';
