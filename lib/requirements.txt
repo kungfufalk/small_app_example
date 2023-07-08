@@ -1,0 +1,8 @@
+ - add a new item to my collection.
+ - view all items in my collection.
+ - view a specific item in my collection.
+ - update an item in my collection.
+ - delete an item from my collection.
+ - search for an item in my collection by name.
+ - categorize items in my collection.
+ - filter items in my collection by category.
