@@ -20,7 +20,7 @@
  - get categories √
 
  Collection:
- - create new collection
- - add item to collection
- - get items in collection
- - delete item from collection
+ - create new collection √
+ - add item to collection √
+ - get items in collection √
+ - delete item from collection √
