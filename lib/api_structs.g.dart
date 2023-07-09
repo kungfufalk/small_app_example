@@ -42,17 +42,17 @@ Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
     };
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
-      json['id'] as int,
+      json['id'] as int?,
       json['name'] as String,
-      json['categoryId'] as int,
-      json['price'] as String,
-      (json['image'] as List<dynamic>).map((e) => e as int).toList(),
+      json['description'] as String?,
+      json['categoryId'] as int?,
+      (json['price'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'description': instance.description,
       'categoryId': instance.categoryId,
       'price': instance.price,
-      'image': instance.image,
     };

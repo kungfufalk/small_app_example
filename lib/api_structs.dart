@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'api_structs.g.dart';
 
 typedef ID = int;
-typedef Price = String;
+typedef Price = double;
 typedef Name = String;
 
 @JsonSerializable()
@@ -13,7 +13,8 @@ class Collection {
 
   Collection(this.id, this.name);
 
-  factory Collection.fromJson(Map<String, dynamic> json) => _$CollectionFromJson(json);
+  factory Collection.fromJson(Map<String, dynamic> json) =>
+      _$CollectionFromJson(json);
 
   Map<String, dynamic> toJson() => _$CollectionToJson(this);
 }
@@ -25,7 +26,8 @@ class CollectionItem {
 
   CollectionItem(this.collectionId, this.itemId);
 
-  factory CollectionItem.fromJson(Map<String, dynamic> json) => _$CollectionItemFromJson(json);
+  factory CollectionItem.fromJson(Map<String, dynamic> json) =>
+      _$CollectionItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$CollectionItemToJson(this);
 }
@@ -40,20 +42,21 @@ class Category {
 
   Category(this.id, this.name, this.parentCategory);
 
-  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }
 
 @JsonSerializable()
 class Item {
-  final ID id;
+  final ID? id;
   final String name;
-  final ID categoryId;
-  final Price price;
-  final List<int> image;
+  final String? description;
+  final ID? categoryId;
+  final Price? price;
 
-  Item(this.id, this.name, this.categoryId, this.price, this.image);
+  Item(this.id, this.name, this.description, this.categoryId, this.price);
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 

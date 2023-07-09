@@ -42,14 +42,18 @@ class CategoryAddForm extends StatelessWidget {
               }),
           ElevatedButton(
             onPressed: () {
-              var categories = CollectionApi().getCategories();
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) =>
-                      CategoryOverview(categories),
-                ),
-              );
+              try {
+                var categories = CollectionApi().getCategories();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) =>
+                        CategoryOverview(categories),
+                  ),
+                );
+              } catch (e) {
+                print(e);
+              }
             },
             child: Text('Show categories'),
           )
@@ -66,6 +70,19 @@ class CategoryOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return FutureBuilder(
+      future: categories,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<Text> categoriesNames =
+              snapshot.data!.map((e) => Text(e.name)).toList();
+          return Column(
+            children: categoriesNames,
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:small_app_example/category_view.dart';
+import 'package:small_app_example/item_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CategoryAddForm(),
+      home: ItemView(),
     );
   }
 }
