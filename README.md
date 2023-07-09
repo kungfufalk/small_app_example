@@ -1,16 +1,21 @@
-# small_app_example
+# Collection Manager
+Many of us love to collect all sorts of items we find interesting, some valuable,
+others only so in a personal way. Over time, it can be a challenge to stay on top
+of everything we have added to our collections over the years.
 
-A small app example
+It is quite easy to build a mobile tool or app that keeps track of everything in our collection. 
 
-## Getting Started
+You can decide what aspects of the individual pieces should be noted.
+The collection manager can be configured to record the value of an object,
+the date it was acquired, the location where it is stored, and much more.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Requirements
+- [ ] add a new item to my collection.
+- [ ] view all items in my collection.
+- [ ] view a specific item in my collection.
+- [ ] update an item in my collection.
+- [ ] delete an item from my collection.
+- [ ] search for an item in my collection by name.
+- [ ] categorize items in my collection.
+- [ ] filter items in my collection by category.
