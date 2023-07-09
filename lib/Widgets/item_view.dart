@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:small_app_example/api_structs.dart';
-import 'package:small_app_example/collection_api.dart';
+import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/API/collection_api.dart';
 
 class ItemView extends StatelessWidget {
   ItemView({super.key});
 
-  TextEditingController name = TextEditingController();
-  TextEditingController description = TextEditingController();
-  TextEditingController price = TextEditingController();
-  TextEditingController categoryId = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController price = TextEditingController();
+  final TextEditingController categoryId = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,11 @@ class ItemView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TextFormField(controller: name, decoration: InputDecoration(labelText: 'Name')),
-          TextFormField(controller: description, decoration: InputDecoration(labelText: 'Description')),
+          TextFormField(
+              controller: name, decoration: InputDecoration(labelText: 'Name')),
+          TextFormField(
+              controller: description,
+              decoration: InputDecoration(labelText: 'Description')),
           TextFormField(
             decoration: InputDecoration(labelText: 'Price'),
             controller: price,
@@ -41,7 +44,7 @@ class ItemView extends StatelessWidget {
               onPressed: () {
                 var priceNumber = double.tryParse(price.text);
                 var categoryNumber = int.tryParse(categoryId.text);
-                CollectionApi().addItem(Item(
+                ItemApi().addItem(Item(
                   null,
                   name.text,
                   description.text,
@@ -74,7 +77,7 @@ class ItemView extends StatelessWidget {
 class ItemOveview extends StatelessWidget {
   ItemOveview(this.categories, {super.key});
 
-  Future<List<Category>> categories;
+  final Future<List<Category>> categories;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:small_app_example/category_view.dart';
-import 'package:small_app_example/item_view.dart';
+import 'package:small_app_example/Widgets/item_view.dart';
 
 void main() {
   runApp(const MyApp());

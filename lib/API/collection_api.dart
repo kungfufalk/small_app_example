@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:small_app_example/api_structs.dart';
-import 'package:small_app_example/constants.dart';
+import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/Constants/constants.dart';
 
 class ItemApi {
   bool responseSuccessful(http.Response response) {

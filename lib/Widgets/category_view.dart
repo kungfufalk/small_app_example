@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:small_app_example/api_structs.dart';
-import 'package:small_app_example/collection_api.dart';
+import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/API/collection_api.dart';
 
 class CategoryAddForm extends StatelessWidget {
   CategoryAddForm({super.key});
 
-  TextEditingController categoryID = TextEditingController();
-  TextEditingController categoryName = TextEditingController();
-  TextEditingController parentCategory = TextEditingController();
+  final TextEditingController categoryID = TextEditingController();
+  final TextEditingController categoryName = TextEditingController();
+  final TextEditingController parentCategory = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +37,13 @@ class CategoryAddForm extends StatelessWidget {
               onPressed: () {
                 var parentCategoryNumber = int.tryParse(parentCategory.text);
                 var categoryIDNumber = int.tryParse(categoryID.text);
-                CollectionApi().addCategory(Category(
+                CategoryApi().addCategory(Category(
                     categoryIDNumber, categoryName.text, parentCategoryNumber));
               }),
           ElevatedButton(
             onPressed: () {
               try {
-                var categories = CollectionApi().getCategories();
+                var categories = CategoryApi().getCategories();
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
@@ -64,9 +64,9 @@ class CategoryAddForm extends StatelessWidget {
 }
 
 class CategoryOverview extends StatelessWidget {
-  CategoryOverview(this.categories, {super.key});
+  const CategoryOverview(this.categories, {super.key});
 
-  Future<List<Category>> categories;
+  final Future<List<Category>> categories;
 
   @override
   Widget build(BuildContext context) {
