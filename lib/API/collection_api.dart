@@ -153,8 +153,9 @@ class CollectionApi {
     }
   }
 
-  Future<List<Item>> getItemsInCollection(ID collectionId) async {
-    var uriString = '$collectionUri/$collectionId/items';
+  Future<List<Item>> getItemsInCollection(Collection collection) async {
+    var collectionId = collection.id;
+    var uriString = '$collectionUri/$collectionId./items';
     var uri = Uri.parse(uriString);
     var response = await http.get(uri);
     if (responseSuccessful(response)) {
