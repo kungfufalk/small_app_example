@@ -29,7 +29,7 @@ class _CollectionViewState extends State<CollectionView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    items = CollectionApi().getItemsInCollection(widget.collection);
+    items = CollectionRestApi().getItemsInCollection(widget.collection);
   }
 
   @override

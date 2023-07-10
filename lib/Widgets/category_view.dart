@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:small_app_example/API/api_structs.dart';
-import 'package:small_app_example/API/collection_api.dart';
+
+import '../API/category_api.dart';
 
 class CategoryAddForm extends StatelessWidget {
   CategoryAddForm({super.key});
@@ -37,13 +38,13 @@ class CategoryAddForm extends StatelessWidget {
               onPressed: () {
                 var parentCategoryNumber = int.tryParse(parentCategory.text);
                 var categoryIDNumber = int.tryParse(categoryID.text);
-                CategoryApi().addCategory(Category(
+                CategoryRestApi().addCategory(Category(
                     categoryIDNumber, categoryName.text, parentCategoryNumber));
               }),
           ElevatedButton(
             onPressed: () {
               try {
-                var categories = CategoryApi().getCategories();
+                var categories = CategoryRestApi().getCategories();
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(

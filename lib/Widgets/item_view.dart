@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:small_app_example/API/api_structs.dart';
-import 'package:small_app_example/API/collection_api.dart';
+
+import '../API/item_api.dart';
 
 class ItemView extends StatelessWidget {
   ItemView({super.key});
@@ -44,7 +45,7 @@ class ItemView extends StatelessWidget {
               onPressed: () {
                 var priceNumber = double.tryParse(price.text);
                 var categoryNumber = int.tryParse(categoryId.text);
-                ItemApi().addItem(Item(
+                ItemRestApi().addItem(Item(
                   null,
                   name.text,
                   description.text,
