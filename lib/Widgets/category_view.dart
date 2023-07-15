@@ -58,7 +58,7 @@ class CategoryAddForm extends StatelessWidget {
                 print(e);
               }
             },
-            child: Text('Show categories'),
+            child: const Text('Show categories'),
           )
         ],
       ),

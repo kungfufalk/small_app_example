@@ -16,7 +16,7 @@ abstract interface class ItemApi {
 }
 
 class ItemDummyApi implements ItemApi {
-  final Item testItem = const Item(1, 'test', 'description', 2, null);
+  final Item testItem = const Item(null, 'test', 'description', 1, 1);
   final List<Item> testItems = const [
     Item(1, 'test', 'description', 1, null),
     Item(2, 'test2', 'description2', 2, null),
@@ -25,19 +25,19 @@ class ItemDummyApi implements ItemApi {
 
   @override
   Future<Item> addItem(Item item) async {
-    if (item == testItem) {
+    if (item.name == 'success') {
       return Future.delayed(const Duration(seconds: 3), () => item);
     } else {
-      return Future.error(throw Exception('error'));
+      throw Exception('error');
     }
   }
 
   @override
   Future<bool> deleteItem(Item item) async {
-    if (item == testItem) {
+    if (item.name == 'success') {
       return Future.delayed(const Duration(seconds: 3), () => true);
     } else {
-      return Future.error(throw Exception('error'));
+      return Future.error('error');
     }
   }
 
@@ -46,7 +46,7 @@ class ItemDummyApi implements ItemApi {
     if (testItem.id == id) {
       return Future.delayed(const Duration(seconds: 3), () => testItem);
     } else {
-      return Future.error(throw Exception('error'));
+      return Future.error('error');
     }
   }
 
@@ -55,7 +55,7 @@ class ItemDummyApi implements ItemApi {
     if (searchString == testItems[0].name) {
       return Future.delayed(const Duration(seconds: 3), () => testItems);
     } else {
-      return Future.error(throw Exception('getItemByName failed'));
+      return Future.error('error');
     }
   }
 
@@ -89,7 +89,7 @@ class ItemRestApi implements ItemApi {
     if (responseSuccessful(response)) {
       return Future.value(Item.fromJson(jsonDecode(response.body)));
     } else {
-      return Future.error(throw Exception('addItem failed'));
+      return Future.error('error');
     }
   }
 
@@ -114,7 +114,7 @@ class ItemRestApi implements ItemApi {
     if (response.statusCode == 200) {
       return Future.value(Item.fromJson(jsonDecode(response.body)));
     } else {
-      return Future.error(throw Exception('addCategory failed'));
+      return Future.error('error');
     }
   }
 
@@ -128,7 +128,7 @@ class ItemRestApi implements ItemApi {
       List<Item> items = List<Item>.from(jsonBody.map((e) => Item.fromJson(e)));
       return Future.value(items);
     } else {
-      return Future.error(throw Exception('getItemByName failed'));
+      return Future.error('getItemByName failed');
     }
   }
 
@@ -142,7 +142,7 @@ class ItemRestApi implements ItemApi {
       List<Item> items = List<Item>.from(jsonBody.map((e) => Item.fromJson(e)));
       return Future.value(items);
     } else {
-      return Future.error(throw Exception('getItemByName failed'));
+      return Future.error('getItemByName failed');
     }
   }
 }
