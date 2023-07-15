@@ -15,6 +15,56 @@ abstract interface class ItemApi {
   Future<List<Item>> getItems();
 }
 
+class ItemDummyApi implements ItemApi {
+  final Item testItem = const Item(1, 'test', 'description', 2, null);
+  final List<Item> testItems = const [
+    Item(1, 'test', 'description', 1, null),
+    Item(2, 'test2', 'description2', 2, null),
+    Item(3, 'test3', 'description3', 3, null)
+  ];
+
+  @override
+  Future<Item> addItem(Item item) async {
+    if (item == testItem) {
+      return Future.delayed(const Duration(seconds: 3), () => item);
+    } else {
+      return Future.error(throw Exception('error'));
+    }
+  }
+
+  @override
+  Future<bool> deleteItem(Item item) async {
+    if (item == testItem) {
+      return Future.delayed(const Duration(seconds: 3), () => true);
+    } else {
+      return Future.error(throw Exception('error'));
+    }
+  }
+
+  @override
+  Future<Item> getItemById(ID id) async {
+    if (testItem.id == id) {
+      return Future.delayed(const Duration(seconds: 3), () => testItem);
+    } else {
+      return Future.error(throw Exception('error'));
+    }
+  }
+
+  @override
+  Future<List<Item>> getItemByName(String searchString) async {
+    if (searchString == testItems[0].name) {
+      return Future.delayed(const Duration(seconds: 3), () => testItems);
+    } else {
+      return Future.error(throw Exception('getItemByName failed'));
+    }
+  }
+
+  @override
+  Future<List<Item>> getItems() async {
+    return Future.delayed(const Duration(seconds: 3), () => testItems);
+  }
+}
+
 class ItemRestApi implements ItemApi {
   bool responseSuccessful(http.Response response) {
     if (response.statusCode == 200) {

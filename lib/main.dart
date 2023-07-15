@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:small_app_example/API/item_api.dart';
 import 'package:small_app_example/Widgets/item_view.dart';
 
 void main() {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ItemView(),
+      home: ItemView(api: ItemDummyApi()),
     );
   }
 }

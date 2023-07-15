@@ -5,8 +5,9 @@ import 'package:small_app_example/API/api_structs.dart';
 import '../API/item_api.dart';
 
 class ItemView extends StatelessWidget {
-  ItemView({super.key});
+  ItemView({super.key, required this.api});
 
+  final ItemApi api;
   final TextEditingController name = TextEditingController();
   final TextEditingController description = TextEditingController();
   final TextEditingController price = TextEditingController();
@@ -45,7 +46,7 @@ class ItemView extends StatelessWidget {
               onPressed: () {
                 var priceNumber = double.tryParse(price.text);
                 var categoryNumber = int.tryParse(categoryId.text);
-                ItemRestApi().addItem(Item(
+                api.addItem(Item(
                   null,
                   name.text,
                   description.text,

@@ -5,7 +5,9 @@ import 'package:small_app_example/API/api_structs.dart';
 import '../API/category_api.dart';
 
 class CategoryAddForm extends StatelessWidget {
-  CategoryAddForm({super.key});
+  CategoryAddForm({super.key, required this.api});
+
+  final CategoryApi api;
 
   final TextEditingController categoryID = TextEditingController();
   final TextEditingController categoryName = TextEditingController();
@@ -38,18 +40,18 @@ class CategoryAddForm extends StatelessWidget {
               onPressed: () {
                 var parentCategoryNumber = int.tryParse(parentCategory.text);
                 var categoryIDNumber = int.tryParse(categoryID.text);
-                CategoryRestApi().addCategory(Category(
+                api.addCategory(Category(
                     categoryIDNumber, categoryName.text, parentCategoryNumber));
               }),
           ElevatedButton(
             onPressed: () {
               try {
-                var categories = CategoryRestApi().getCategories();
+                var categories = api.getCategories();
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) =>
-                        CategoryOverview(categories),
+                        CategoryOverview(categories: categories),
                   ),
                 );
               } catch (e) {
@@ -65,7 +67,7 @@ class CategoryAddForm extends StatelessWidget {
 }
 
 class CategoryOverview extends StatelessWidget {
-  const CategoryOverview(this.categories, {super.key});
+  const CategoryOverview({required this.categories, super.key});
 
   final Future<List<Category>> categories;
 

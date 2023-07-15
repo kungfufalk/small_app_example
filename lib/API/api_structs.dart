@@ -56,7 +56,7 @@ class Item {
   final ID? categoryId;
   final Price? price;
 
-  Item(this.id, this.name, this.description, this.categoryId, this.price);
+  const Item(this.id, this.name, this.description, this.categoryId, this.price);
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 

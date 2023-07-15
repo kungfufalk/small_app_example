@@ -13,9 +13,10 @@ import '../API/api_structs.dart';
 // - [ ] filter items in my collection by category.
 
 class CollectionView extends StatefulWidget {
-  const CollectionView({required this.collection, super.key});
+  const CollectionView({required this.collection, required this.api, super.key});
 
   final Collection collection;
+  final CollectionApi api;
 
   @override
   State<CollectionView> createState() => _CollectionViewState();
@@ -29,7 +30,7 @@ class _CollectionViewState extends State<CollectionView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    items = CollectionRestApi().getItemsInCollection(widget.collection);
+    items = widget.api.getItemsInCollection(widget.collection);
   }
 
   @override
