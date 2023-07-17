@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../Constants/constants.dart';
 import 'api_structs.dart';
 import 'package:http/http.dart' as http;
+
+final itemAPIRepository = Provider<ItemApi>((ref) => ItemRestApi());
 
 abstract interface class ItemApi {
   Future<Item> addItem(Item item);

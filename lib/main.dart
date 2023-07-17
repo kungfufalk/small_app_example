@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_app_example/API/item_api.dart';
 import 'package:small_app_example/Widgets/item_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(
+      overrides: [itemAPIRepository.overrideWithValue(ItemDummyApi())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ItemView(api: ItemDummyApi()),
+      home: ItemView(),
     );
   }
 }

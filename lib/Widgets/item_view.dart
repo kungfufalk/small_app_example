@@ -1,102 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/Controller/ItemViewController.dart';
 
-import '../API/item_api.dart';
+class ItemView extends ConsumerWidget {
+  ItemView({super.key});
 
-class ItemView extends StatefulWidget {
-  ItemView({super.key, required this.api});
-
-  final ItemApi api;
-
-  @override
-  State<ItemView> createState() => _ItemViewState();
-}
-
-class _ItemViewState extends State<ItemView> {
   final TextEditingController name = TextEditingController();
-
   final TextEditingController description = TextEditingController();
-
   final TextEditingController price = TextEditingController();
-
-  final TextEditingController categoryId = TextEditingController();
-
-  Item? item;
+  final TextEditingController categoryID = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loadingState = ref.watch(itemViewControllerProvider);
+    ref.listen(
+      itemViewControllerProvider,
+      (_, value) {
+        value.when(
+            data: (state) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('success')));
+            },
+            error: (error, __) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('error')));
+            },
+            loading: () {});
+      },
+      //   onError: (value, stack) {
+      //   if (context.mounted) {
+      //     ScaffoldMessenger.of(context)
+      //         .showSnackBar(const SnackBar(content: Text('error')));
+      //   }
+      // },
+    );
     return Scaffold(
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextFormField(
-                controller: name,
-                decoration: const InputDecoration(labelText: 'Name')),
-            TextFormField(
-                controller: description,
-                decoration: const InputDecoration(labelText: 'Description')),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Price'),
-              controller: price,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-            ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Category ID'),
-              controller: categoryId,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-            ),
-            ElevatedButton(
-              child: const Text('Add Item'),
-              onPressed: () async {
-                var priceNumber = double.tryParse(price.text);
-                var categoryNumber = int.tryParse(categoryId.text);
-                try {
-                  item = await widget.api.addItem(Item(
-                    null,
-                    name.text,
-                    description.text,
-                    categoryNumber,
-                    priceNumber,
-                  ));
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('success')));
-                  }
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('error')));
-                  }
-                }
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                try {
-                  var items = widget.api.getItems();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => ItemOverview(items),
-                    ),
-                  );
-                } catch (e) {
-                  print(e);
-                }
-              },
-              child: const Text('Show categories'),
-            )
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        TextFormField(
+            controller: name,
+            decoration: const InputDecoration(labelText: 'Name')),
+        TextFormField(
+            controller: description,
+            decoration: const InputDecoration(labelText: 'Description')),
+        TextFormField(
+          decoration: const InputDecoration(labelText: 'Price'),
+          controller: price,
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
           ],
-        )
-    );
+        ),
+        TextFormField(
+          decoration: const InputDecoration(labelText: 'Category ID'),
+          controller: categoryID,
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
+        ),
+        ElevatedButton(
+            child: loadingState.when(
+                data: (_) => const Text('Add Item'),
+                error: (err, stack) => Text('Error: $err'),
+                loading: () => const CircularProgressIndicator()),
+            onPressed: () {
+              var priceNumber = double.tryParse(price.text);
+              var categoryNumber = int.tryParse(categoryID.text);
+              ref.read(itemViewControllerProvider.notifier).addItem(Item(null,
+                  name.text, description.text, categoryNumber, priceNumber));
+            }),
+        // ElevatedButton(
+        //   onPressed: () {
+        //     try {
+        //       var items = widget.api.getItems();
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute<void>(
+        //           builder: (BuildContext context) => ItemOverview(items),
+        //         ),
+        //       );
+        //     } catch (e) {
+        //       print(e);
+        //     }
+        //   },
+        //   child: const Text('Show categories'),
+        // )
+      ],
+    ));
   }
 }
 
@@ -112,7 +107,7 @@ class ItemOverview extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Text> categoriesNames =
-          snapshot.data!.map((e) => Text(e.name)).toList();
+              snapshot.data!.map((e) => Text(e.name)).toList();
           return Column(
             children: categoriesNames,
           );
