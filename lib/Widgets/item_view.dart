@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_app_example/API/api_structs.dart';
 import 'package:small_app_example/Controller/ItemViewController.dart';
+import 'package:small_app_example/Extensions/AsyncValueUI.dart';
 
 class ItemView extends ConsumerWidget {
   ItemView({super.key});
@@ -14,27 +15,16 @@ class ItemView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loadingState = ref.watch(itemViewControllerProvider);
+    final state = ref.watch(itemViewControllerProvider);
     ref.listen(
       itemViewControllerProvider,
-      (_, value) {
-        value.when(
-            data: (state) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('success')));
-            },
-            error: (error, __) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('error')));
-            },
-            loading: () {});
+      (_, state) {
+        state.showSnackBarOnError(context);
+        if (state.hasValue && state.value != null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('success')));
+        }
       },
-      //   onError: (value, stack) {
-      //   if (context.mounted) {
-      //     ScaffoldMessenger.of(context)
-      //         .showSnackBar(const SnackBar(content: Text('error')));
-      //   }
-      // },
     );
     return Scaffold(
         body: Column(
@@ -64,32 +54,21 @@ class ItemView extends ConsumerWidget {
           ],
         ),
         ElevatedButton(
-            child: loadingState.when(
+            child: state.when(
                 data: (_) => const Text('Add Item'),
-                error: (err, stack) => Text('Error: $err'),
+                error: (err, stack) => const Text('Add Item'),
                 loading: () => const CircularProgressIndicator()),
             onPressed: () {
-              var priceNumber = double.tryParse(price.text);
-              var categoryNumber = int.tryParse(categoryID.text);
-              ref.read(itemViewControllerProvider.notifier).addItem(Item(null,
-                  name.text, description.text, categoryNumber, priceNumber));
+              if (!state.isLoading) {
+                var priceNumber = double.tryParse(price.text);
+                var categoryNumber = int.tryParse(categoryID.text);
+                ref.read(itemViewControllerProvider.notifier).addItem(
+                      Item(null, name.text, description.text, categoryNumber,
+                          priceNumber),
+                      context,
+                    );
+              }
             }),
-        // ElevatedButton(
-        //   onPressed: () {
-        //     try {
-        //       var items = widget.api.getItems();
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute<void>(
-        //           builder: (BuildContext context) => ItemOverview(items),
-        //         ),
-        //       );
-        //     } catch (e) {
-        //       print(e);
-        //     }
-        //   },
-        //   child: const Text('Show categories'),
-        // )
       ],
     ));
   }
