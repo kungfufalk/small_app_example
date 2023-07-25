@@ -5,6 +5,7 @@ part 'api_structs.g.dart';
 typedef ID = int;
 typedef Price = double;
 typedef Name = String;
+typedef Description = String;
 
 @JsonSerializable()
 class Collection {
@@ -51,8 +52,8 @@ class Category {
 @JsonSerializable()
 class Item {
   final ID? id;
-  final String name;
-  final String? description;
+  final Name name;
+  final Description? description;
   final ID? categoryId;
   final Price? price;
 

@@ -21,7 +21,7 @@ abstract interface class ItemApi {
 
 class ItemDummyApi implements ItemApi {
   final Item testItem = const Item(null, 'test', 'description', 1, 1);
-  final List<Item> testItems = const [
+  static const List<Item> testItems = [
     Item(1, 'test', 'description', 1, null),
     Item(2, 'test2', 'description2', 2, null),
     Item(3, 'test3', 'description3', 3, null)

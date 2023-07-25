@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -6,7 +5,7 @@ import 'package:small_app_example/API/item_api.dart';
 
 import '../API/api_structs.dart';
 
-part 'ItemViewController.g.dart';
+part 'item_view_controller.g.dart';
 
 @riverpod
 class ItemViewController extends _$ItemViewController {
@@ -19,15 +18,16 @@ class ItemViewController extends _$ItemViewController {
     return null;
   }
 
-  void addItem(Item item, BuildContext context) async {
+  void addItem(
+      {required Name name,
+      required Description description,
+      Price? price,
+      ID? categoryId,
+      required BuildContext context}) async {
+    var item = Item(null, name, description, categoryId, price);
     state = const AsyncData(null);
-    // final key = _key;
     final itemRepository = ref.read(itemAPIRepository);
     state = const AsyncLoading();
     state = await AsyncValue.guard(() => itemRepository.addItem(item));
-    // if (key == _key) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(content: Text('Item was successfully added')));
-    // }
   }
 }

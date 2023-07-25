@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_app_example/API/api_structs.dart';
-import 'package:small_app_example/Controller/ItemViewController.dart';
-import 'package:small_app_example/Extensions/AsyncValueUI.dart';
+import 'package:small_app_example/Controller/item_view_controller.dart';
+import 'package:small_app_example/Extensions/async_value_ui.dart';
+import 'package:small_app_example/Widgets/basic_widgets/background_widget.dart';
+import 'package:small_app_example/Widgets/basic_widgets/custom_text_form_field.dart';
+import 'package:small_app_example/Widgets/basic_widgets/paddin_widget.dart';
 
 class ItemView extends ConsumerWidget {
   ItemView({super.key});
@@ -27,50 +29,66 @@ class ItemView extends ConsumerWidget {
       },
     );
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        TextFormField(
-            controller: name,
-            decoration: const InputDecoration(labelText: 'Name')),
-        TextFormField(
-            controller: description,
-            decoration: const InputDecoration(labelText: 'Description')),
-        TextFormField(
-          decoration: const InputDecoration(labelText: 'Price'),
-          controller: price,
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
+      body: BackGroundWidget(
+        child: PaddingWidget(
+          child: Form(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomTextFormField(
+                  controller: name,
+                  labelText: 'Name',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomTextFormField(
+                  controller: description,
+                  labelText: 'Description',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomNumberFormField(
+                  controller: price,
+                  labelText: 'Price',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomNumberFormField(
+                  controller: categoryID,
+                  labelText: 'Category ID',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    child: state.when(
+                        data: (_) => const Text('Add Item'),
+                        error: (err, stack) => const Text('Add Item'),
+                        loading: () => const CircularProgressIndicator()),
+                    onPressed: () {
+                      if (!state.isLoading) {
+                        ref.read(itemViewControllerProvider.notifier).addItem(
+                            name: name.text,
+                            description: description.text,
+                            price: double.tryParse(price.text),
+                            categoryId: int.tryParse(categoryID.text),
+                            context: context);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        TextFormField(
-          decoration: const InputDecoration(labelText: 'Category ID'),
-          controller: categoryID,
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
-        ),
-        ElevatedButton(
-            child: state.when(
-                data: (_) => const Text('Add Item'),
-                error: (err, stack) => const Text('Add Item'),
-                loading: () => const CircularProgressIndicator()),
-            onPressed: () {
-              if (!state.isLoading) {
-                var priceNumber = double.tryParse(price.text);
-                var categoryNumber = int.tryParse(categoryID.text);
-                ref.read(itemViewControllerProvider.notifier).addItem(
-                      Item(null, name.text, description.text, categoryNumber,
-                          priceNumber),
-                      context,
-                    );
-              }
-            }),
-      ],
-    ));
+      ),
+    );
   }
 }
 

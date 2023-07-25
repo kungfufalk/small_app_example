@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/API/item_api.dart';
 import 'package:small_app_example/Constants/constants.dart';
+import 'package:small_app_example/Exceptions/collection_api_exceptions.dart';
 
 abstract interface class CollectionApi {
   Future<Collection> createCollection(Collection collection);
@@ -12,6 +15,59 @@ abstract interface class CollectionApi {
 
   Future<CollectionItem> removeItemFromCollection(
       CollectionItem collectionItem);
+}
+
+class CollectionDummyApi implements CollectionApi {
+  static const dummyCollectionName = 'success';
+
+  @override
+  Future<CollectionItem> addItemToCollection(CollectionItem collectionItem) {
+    if (collectionItem.itemId == 1) {
+      return Future.delayed(
+        const Duration(seconds: 3),
+        () => collectionItem,
+      );
+    } else {
+      throw const AddItemToCollectionError();
+    }
+  }
+
+  @override
+  Future<Collection> createCollection(Collection collection) {
+    if (collection.name == dummyCollectionName) {
+      return Future.delayed(
+        const Duration(seconds: 3),
+        () => collection,
+      );
+    } else {
+      throw const CreateCollectionError();
+    }
+  }
+
+  @override
+  Future<List<Item>> getItemsInCollection(Collection collection) {
+    if (collection.name == dummyCollectionName) {
+      return Future.delayed(
+        const Duration(seconds: 3),
+        () => ItemDummyApi.testItems,
+      );
+    } else {
+      throw const GetItemsInCollectionError();
+    }
+  }
+
+  @override
+  Future<CollectionItem> removeItemFromCollection(
+      CollectionItem collectionItem) {
+    if (collectionItem.itemId == 1) {
+      return Future.delayed(
+        const Duration(seconds: 3),
+        () => collectionItem,
+      );
+    } else {
+      throw const RemoveItemFromCollectionError();
+    }
+  }
 }
 
 class CollectionRestApi implements CollectionApi {
@@ -87,3 +143,5 @@ class CollectionRestApi implements CollectionApi {
     }
   }
 }
+
+final collectionRepository = Provider((ref) => CollectionRestApi());
