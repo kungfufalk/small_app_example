@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const baseUri = 'http://192.168.100.25:8080';
+const baseUri = 'localhost:8080';
 const collectionUri = '$baseUri/collection';
 const itemUri = '$baseUri/item';
 const categoryUri = '$baseUri/category';

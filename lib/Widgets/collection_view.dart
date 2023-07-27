@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:small_app_example/Constants/constants.dart';
 import 'package:small_app_example/Controller/collection_view_controller.dart';
 import 'package:small_app_example/Extensions/async_value_ui.dart';
 

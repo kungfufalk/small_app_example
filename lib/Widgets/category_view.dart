@@ -43,23 +43,23 @@ class CategoryAddForm extends StatelessWidget {
                 api.addCategory(Category(
                     categoryIDNumber, categoryName.text, parentCategoryNumber));
               }),
-          ElevatedButton(
-            onPressed: () {
-              try {
-                var categories = api.getCategories();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) =>
-                        CategoryOverview(categories: categories),
-                  ),
-                );
-              } catch (e) {
-                print(e);
-              }
-            },
-            child: const Text('Show categories'),
-          )
+          // ElevatedButton(
+          //   onPressed: () {
+          //     try {
+          //       var categories = api.getCategories();
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute<void>(
+          //           builder: (BuildContext context) =>
+          //               CategoryOverview(categories: categories),
+          //         ),
+          //       );
+          //     } catch (e) {
+          //       print(e);
+          //     }
+          //   },
+          //   child: const Text('Show categories'),
+          // )
         ],
       ),
     );
@@ -67,25 +67,26 @@ class CategoryAddForm extends StatelessWidget {
 }
 
 class CategoryOverview extends StatelessWidget {
-  const CategoryOverview({required this.categories, super.key});
+  const CategoryOverview({super.key});
 
-  final Future<List<Category>> categories;
+  // final Future<List<Category>> categories;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: categories,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<Text> categoriesNames =
-              snapshot.data!.map((e) => Text(e.name)).toList();
-          return Column(
-            children: categoriesNames,
-          );
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
-    );
+    throw UnimplementedError();
+    // return FutureBuilder(
+    //   future: categories,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       List<Text> categoriesNames =
+    //           snapshot.data!.map((e) => Text(e.name)).toList();
+    //       return Column(
+    //         children: categoriesNames,
+    //       );
+    //     } else {
+    //       return const CircularProgressIndicator();
+    //     }
+    //   },
+    // );
   }
 }
