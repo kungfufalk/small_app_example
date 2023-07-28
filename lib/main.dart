@@ -8,6 +8,7 @@ import 'package:small_app_example/Widgets/action_overview.dart';
 import 'package:small_app_example/Widgets/category_view.dart';
 import 'package:small_app_example/Widgets/collection_view.dart';
 import 'package:small_app_example/Widgets/item_view.dart';
+import 'package:small_app_example/Widgets/scaffold_with_nav.dart';
 
 void main() {
   runApp(const ProviderScope(
@@ -15,27 +16,37 @@ void main() {
       child: MyApp()));
 }
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKeyA = GlobalKey<NavigatorState>(debugLabel: 'shell A');
+final _shellNavigatorKeyB = GlobalKey<NavigatorState>(debugLabel: 'shell B');
+
 final routerConfig = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: AppRoutes.home,
-      builder: (BuildContext context, GoRouterState state) =>
-          const ActionOverview(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: AppRoutes.collection,
-          builder: (BuildContext context, GoRouterState state) =>
-          const CollectionView(),
+  initialLocation: AppRoutes.category,
+  navigatorKey: _rootNavigatorKey,
+  routes: [
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) =>
+          ScaffoldWithNavBar(navigationShell: navigationShell),
+      branches: [
+        StatefulShellBranch(
+          navigatorKey: _shellNavigatorKeyA,
+          routes: [
+            GoRoute(
+              path: AppRoutes.category,
+              builder: (context, state) => const CategoryOverview(),
+            ),
+          ],
         ),
-        GoRoute(
-          path: AppRoutes.item,
-          builder: (context, state) => ItemView(),
+        StatefulShellBranch(
+          navigatorKey: _shellNavigatorKeyB,
+          routes: [
+            GoRoute(
+              path: AppRoutes.item,
+              builder: (context, state) => ItemView(),
+            ),
+          ],
         ),
-        GoRoute(
-          path: AppRoutes.category,
-          builder: (context, state) => const CategoryOverview(),
-        )
-      ]
+      ],
     ),
   ],
 );

@@ -1,8 +1,8 @@
 class AppRoutes {
   static const home = '/';
-  static const item = 'item';
-  static const collection = 'collection';
-  static const category = 'category';
+  static const item = '/item';
+  static const collection = '/collection';
+  static const category = '/category';
 }
 
 class RouteNames {
