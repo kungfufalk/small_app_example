@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../Constants/constants.dart';
 import 'api_structs.dart';
 import 'package:http/http.dart' as http;
+
+final categoryAPIRepository = Provider<CategoryApi>((ref) => CategoryRestApi());
 
 abstract interface class CategoryApi {
   Future<Category> addCategory(Category category);
