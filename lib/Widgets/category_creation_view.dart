@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/Controller/category_creation_controller.dart';
+import 'package:small_app_example/Extensions/async_value_ui.dart';
 
 import '../API/category_api.dart';
 
-class CategoryAddForm extends StatelessWidget {
+class CategoryAddForm extends ConsumerWidget {
   CategoryAddForm({super.key, required this.api});
 
   final CategoryApi api;
@@ -14,77 +17,61 @@ class CategoryAddForm extends StatelessWidget {
   final TextEditingController parentCategory = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        TextFormField(
-          controller: categoryID,
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
-        ),
-        TextFormField(controller: categoryName),
-        TextFormField(
-          controller: parentCategory,
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
-        ),
-        ElevatedButton(
-            child: const Text('Add Category'),
-            onPressed: () {
-              var parentCategoryNumber = int.tryParse(parentCategory.text);
-              var categoryIDNumber = int.tryParse(categoryID.text);
-              api.addCategory(Category(
-                  categoryIDNumber, categoryName.text, parentCategoryNumber));
-            }),
-        // ElevatedButton(
-        //   onPressed: () {
-        //     try {
-        //       var categories = api.getCategories();
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute<void>(
-        //           builder: (BuildContext context) =>
-        //               CategoryOverview(categories: categories),
-        //         ),
-        //       );
-        //     } catch (e) {
-        //       print(e);
-        //     }
-        //   },
-        //   child: const Text('Show categories'),
-        // )
-      ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(categoryControllerProvider);
+    ref.listen(
+      categoryControllerProvider,
+      (_, state) {
+        state.showSnackBarOnError(context);
+      },
     );
-  }
-}
-
-class CategoryOverview extends StatelessWidget {
-  const CategoryOverview({super.key});
-
-  // final Future<List<Category>> categories;
-
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-    // return FutureBuilder(
-    //   future: categories,
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       List<Text> categoriesNames =
-    //           snapshot.data!.map((e) => Text(e.name)).toList();
-    //       return Column(
-    //         children: categoriesNames,
-    //       );
-    //     } else {
-    //       return const CircularProgressIndicator();
-    //     }
-    //   },
-    // );
+    if (state.isLoading) {
+      return const CircularProgressIndicator();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Category ID'),
+              controller: categoryID,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+            ),
+            TextFormField(
+                decoration: const InputDecoration(labelText: 'Category Name'),
+                controller: categoryName),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Parent Category'),
+              controller: parentCategory,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+            ),
+            ElevatedButton(
+              child: const Text('Add Category'),
+              onPressed: () {
+                final parentCategoryNumber = int.tryParse(parentCategory.text);
+                final categoryIDNumber = int.tryParse(categoryID.text);
+                ref
+                    .read(categoryControllerProvider.notifier)
+                    .addCategory(
+                      Category(
+                        categoryIDNumber,
+                        categoryName.text,
+                        parentCategoryNumber,
+                      ),
+                    );
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

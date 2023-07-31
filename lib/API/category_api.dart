@@ -26,7 +26,8 @@ class CategoryRestApi implements CategoryApi {
     if (responseSuccessful(response)) {
       return Future.value(Category.fromJson(jsonDecode(response.body)));
     } else {
-      return Future.error(throw Exception('addCategory failed'));
+      final errorMessage = jsonDecode(response.body)['message'];
+      return Future.error(throw Exception(errorMessage));
     }
   }
 

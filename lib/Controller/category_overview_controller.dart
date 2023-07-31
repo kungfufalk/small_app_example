@@ -6,21 +6,16 @@ import '../API/api_structs.dart';
 part 'category_overview_controller.g.dart';
 
 @riverpod
-class CategoryOveviewController extends _$CategoryOveviewController {
+class CategoryOverviewController extends _$CategoryOverviewController {
   @override
-   build() {
-    return;
+  Future<AsyncValue<List<Category>>> build() async {
+    return await AsyncValue.guard(
+        () => ref.read(categoryAPIRepository).getCategories());
   }
-  
-  Future<AsyncValue<List<Category>>> getCategories() async{
-    state = const AsyncLoading<void>();
-    final categories = await AsyncValue.guard(() => ref.read(categoryAPIRepository).getCategories());
-    if (categories.hasError) {
-      state = AsyncError(categories.error!, categories.stackTrace!);
-    }
-    if (categories.hasValue) {
-      state = const AsyncData(_);
-    }
-    return categories;
-  }
+
+// Future<void> getCategories() async {
+//   state = const AsyncLoading();
+//   state = await AsyncValue.guard(
+//       () => ref.read(categoryAPIRepository).getCategories());
+// }
 }

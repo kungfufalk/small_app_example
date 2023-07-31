@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
       routerConfig: routerConfig,
       title: 'Flutter Demo',
       darkTheme: ThemeData.dark(useMaterial3: true),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: GoogleFonts.robotoTextTheme(),
-      ),
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      //   useMaterial3: true,
+      //   textTheme: GoogleFonts.robotoTextTheme(),
+      // ),
       color: Colors.redAccent,
     );
   }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:small_app_example/API/api_structs.dart';
+import 'package:small_app_example/API/category_api.dart';
+import 'package:small_app_example/Widgets/category_creation_view.dart';
+import 'package:small_app_example/Widgets/category_details_view.dart';
+import 'package:small_app_example/Widgets/category_overview.dart';
 import 'package:small_app_example/Widgets/collection_view.dart';
 import 'Constants/route_constants.dart';
-import 'Widgets/category_creation_view.dart';
 import 'Widgets/item_view.dart';
 import 'Widgets/scaffold_with_nav.dart';
 
@@ -25,6 +29,21 @@ final routerConfig = GoRouter(
             GoRoute(
               path: AppRoutes.category,
               builder: (context, state) => const CategoryOverview(),
+              routes: [
+                GoRoute(
+                  path: 'details/:categoryID',
+                  builder: (context, state) => CategoryDetailsView(
+                    categoryID:
+                        int.tryParse(state.pathParameters['categoryID']!)!,
+                  ),
+                ),
+                GoRoute(
+                  path: 'creation',
+                  builder: (context, state) => CategoryAddForm(
+                    api: CategoryRestApi(),
+                  ),
+                )
+              ],
             ),
           ],
         ),

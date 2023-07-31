@@ -3,6 +3,8 @@ class AppRoutes {
   static const item = '/item';
   static const collection = '/collection';
   static const category = '/category';
+  static const categoryDetails = '$category/details';
+  static const categoryCreation = '$category/creation';
 }
 
 class RouteNames {

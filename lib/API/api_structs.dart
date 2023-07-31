@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'api_structs.g.dart';
@@ -8,11 +9,12 @@ typedef Name = String;
 typedef Description = String;
 
 @JsonSerializable()
+@immutable
 class Collection {
   final ID id;
   final Name name;
 
-  Collection(this.id, this.name);
+  const Collection(this.id, this.name);
 
   factory Collection.fromJson(Map<String, dynamic> json) =>
       _$CollectionFromJson(json);
@@ -21,11 +23,12 @@ class Collection {
 }
 
 @JsonSerializable()
+@immutable
 class CollectionItem {
   final ID collectionId;
   final ID itemId;
 
-  CollectionItem(this.collectionId, this.itemId);
+  const CollectionItem(this.collectionId, this.itemId);
 
   factory CollectionItem.fromJson(Map<String, dynamic> json) =>
       _$CollectionItemFromJson(json);
@@ -34,6 +37,7 @@ class CollectionItem {
 }
 
 @JsonSerializable()
+@immutable
 class Category {
   @JsonKey(includeIfNull: true)
   final ID? id;
@@ -41,7 +45,7 @@ class Category {
   @JsonKey(includeIfNull: true)
   final ID? parentCategory;
 
-  Category(this.id, this.name, this.parentCategory);
+  const Category(this.id, this.name, this.parentCategory);
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
@@ -50,6 +54,7 @@ class Category {
 }
 
 @JsonSerializable()
+@immutable
 class Item {
   final ID? id;
   final Name name;
