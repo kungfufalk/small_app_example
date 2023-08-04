@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:small_app_example/Controller/category_creation_controller.dart';
+import 'package:small_app_example/Controller/category_controller.dart';
 
 import '../API/api_structs.dart';
 

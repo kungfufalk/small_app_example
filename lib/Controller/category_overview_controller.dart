@@ -10,7 +10,7 @@ class CategoryOverviewController extends _$CategoryOverviewController {
   @override
   Future<AsyncValue<List<Category>>> build() async {
     return await AsyncValue.guard(
-        () => ref.read(categoryAPIRepository).getCategories());
+        () => ref.read(categoryAPIRepositoryProvider).getCategories());
   }
 
 // Future<void> getCategories() async {

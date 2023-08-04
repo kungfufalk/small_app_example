@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:small_app_example/API/api_structs.dart';
-import 'package:small_app_example/Controller/category_creation_controller.dart';
+import 'package:small_app_example/Controller/category_controller.dart';
 import 'package:small_app_example/Extensions/async_value_ui.dart';
 
 import '../API/category_api.dart';
@@ -18,9 +18,9 @@ class CategoryAddForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(categoryControllerProvider);
+    final state = ref.watch(categoryCreationControllerProvider);
     ref.listen(
-      categoryControllerProvider,
+      categoryCreationControllerProvider,
       (_, state) {
         state.showSnackBarOnError(context);
       },
@@ -59,8 +59,8 @@ class CategoryAddForm extends ConsumerWidget {
                 final parentCategoryNumber = int.tryParse(parentCategory.text);
                 final categoryIDNumber = int.tryParse(categoryID.text);
                 ref
-                    .read(categoryControllerProvider.notifier)
-                    .addCategory(
+                    .read(categoryCreationControllerProvider.notifier)
+                    .createCategory(
                       Category(
                         categoryIDNumber,
                         categoryName.text,

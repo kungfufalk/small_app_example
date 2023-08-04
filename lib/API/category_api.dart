@@ -1,10 +1,15 @@
 import 'dart:convert';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../Constants/constants.dart';
 import 'api_structs.dart';
 import 'package:http/http.dart' as http;
 
-final categoryAPIRepository = Provider<CategoryApi>((ref) => CategoryRestApi());
+part 'category_api.g.dart';
+
+@riverpod
+CategoryApi categoryAPIRepository(CategoryAPIRepositoryRef ref) {
+  return CategoryRestApi();
+}
 
 abstract interface class CategoryApi {
   Future<Category> addCategory(Category category);
@@ -27,7 +32,7 @@ class CategoryRestApi implements CategoryApi {
       return Future.value(Category.fromJson(jsonDecode(response.body)));
     } else {
       final errorMessage = jsonDecode(response.body)['message'];
-      return Future.error(throw Exception(errorMessage));
+      return Future.error(Exception(errorMessage));
     }
   }
 

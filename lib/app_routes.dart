@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:small_app_example/API/api_structs.dart';
 import 'package:small_app_example/API/category_api.dart';
 import 'package:small_app_example/Widgets/category_creation_view.dart';
 import 'package:small_app_example/Widgets/category_details_view.dart';

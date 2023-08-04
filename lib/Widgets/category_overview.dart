@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:small_app_example/Constants/route_constants.dart';
-import 'package:small_app_example/Controller/category_creation_controller.dart';
+import 'package:small_app_example/Controller/category_controller.dart';
 import 'package:small_app_example/Widgets/category_thumbnail.dart';
 
 class CategoryOverview extends ConsumerWidget {
@@ -18,6 +18,7 @@ class CategoryOverview extends ConsumerWidget {
             return const Text('No categories');
           } else {
             return GridView.count(
+
               crossAxisCount: 3,
               children: data
                   .map((e) => CategoryThumbnail(

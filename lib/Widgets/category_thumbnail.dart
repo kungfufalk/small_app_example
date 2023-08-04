@@ -20,11 +20,20 @@ class CategoryThumbnail extends StatelessWidget {
       onTap: () {
         context.go('${AppRoutes.categoryDetails}/${category.id}');
       },
-      child: Column(
-        children: [
-          Image(image: image.image),
-          Text(category.name),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Flexible(
+              flex: 5,
+              child: Image(image: image.image),
+            ),
+            Flexible(
+              flex: 1,
+              child: Text(category.name),
+            ),
+          ],
+        ),
       ),
     );
   }
