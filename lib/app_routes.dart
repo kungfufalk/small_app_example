@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:small_app_example/API/category_api.dart';
+import 'package:small_app_example/Widgets/basic_widgets/take_picture_screen.dart';
 import 'package:small_app_example/Widgets/category_creation_view.dart';
 import 'package:small_app_example/Widgets/category_details_view.dart';
 import 'package:small_app_example/Widgets/category_overview.dart';
@@ -66,5 +67,9 @@ final routerConfig = GoRouter(
         )
       ],
     ),
+    // GoRoute(
+    //   path: '/camera',
+    //   builder: (context, state) => const TakePictureScreen(),
+    // ),
   ],
 );

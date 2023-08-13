@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +24,6 @@ class CategoryOverview extends ConsumerWidget {
               crossAxisCount: 3,
               children: data
                   .map((e) => CategoryThumbnail(
-                        image: Image.asset('assets/categoryThumbnail.png'),
                         category: e,
                       ))
                   .toList(),
@@ -30,6 +31,7 @@ class CategoryOverview extends ConsumerWidget {
           }
         },
         error: (error, stackTrace) {
+          log('Error', error: error,stackTrace: stackTrace);
           return const Text('Error');
         },
         loading: () => const CircularProgressIndicator(),

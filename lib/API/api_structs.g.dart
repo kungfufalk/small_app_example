@@ -33,12 +33,14 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       json['id'] as int?,
       json['name'] as String,
       json['parentCategory'] as int?,
+      json['thumbnail'] as String?,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'parentCategory': instance.parentCategory,
+      'thumbnail': instance.thumbnail,
     };
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(

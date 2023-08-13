@@ -44,8 +44,9 @@ class Category {
   final String name;
   @JsonKey(includeIfNull: true)
   final ID? parentCategory;
+  final String? thumbnail;
 
-  const Category(this.id, this.name, this.parentCategory);
+  const Category(this.id, this.name, this.parentCategory, this.thumbnail);
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);

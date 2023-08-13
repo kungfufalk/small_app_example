@@ -1,24 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:small_app_example/Constants/route_constants.dart';
+import '../../Constants/route_constants.dart';
 
-import '../API/api_structs.dart';
+class ThumbnailView extends StatelessWidget {
+  const ThumbnailView({super.key, required this.image, required this.title required this.onTap});
 
-class CategoryThumbnail extends StatelessWidget {
-  const CategoryThumbnail({
-    super.key,
-    required this.category,
-  });
-
-  final Category category;
+  final ImageProvider image;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('${AppRoutes.categoryDetails}/${category.id}');
+        onTap;
+        //context.go('${AppRoutes.categoryDetails}/${category.id}');
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -26,9 +21,7 @@ class CategoryThumbnail extends StatelessWidget {
           children: [
             Flexible(
               flex: 5,
-              child: Image.memory(
-                base64Decode(category.thumbnail!),
-              ),
+              child: Image(image: image),
             ),
             Flexible(
               flex: 1,

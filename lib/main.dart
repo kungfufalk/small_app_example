@@ -1,12 +1,21 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:small_app_example/camera_provider.dart';
 
 import 'app_routes.dart';
 
-void main() {
-  runApp(const ProviderScope(
-      // overrides: [itemAPIRepository.overrideWithValue(ItemDummyApi())],
-      child: MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
+  runApp(ProviderScope(
+    overrides: [
+      cameraProvider.overrideWithValue(firstCamera),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
