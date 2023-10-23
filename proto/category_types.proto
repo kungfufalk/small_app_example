@@ -1,0 +1,14 @@
+syntax = "proto3";
+package find_me_pls;
+
+message Category {
+    optional int32 id = 1;
+    string name = 2;
+    optional int32 parent_category = 3;
+    optional bytes thumbnail = 4;
+}
+
+message Categories {
+    repeated Category categories = 1;
+}
+

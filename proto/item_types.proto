@@ -1,0 +1,29 @@
+syntax = "proto3";
+package find_me_pls;
+
+message Item {
+    optional int32 id = 1;
+    string name = 2;
+    optional string description = 3;
+    optional int32 category_id = 4;
+    optional float price = 5;
+    optional bytes thumbnail = 6;
+    optional bytes fullsize = 7;
+}
+
+message Items {
+    repeated Item items = 1;
+}
+
+message GetItemRequest {
+    int32 id = 1;
+}
+
+message DeleteItemRequest {
+    int32 id = 1;
+}
+
+message QueryItemsRequest {
+    string query = 1;
+}
+

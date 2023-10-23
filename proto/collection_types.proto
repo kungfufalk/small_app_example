@@ -1,0 +1,34 @@
+syntax = "proto3";
+package find_me_pls;
+
+message Collection {
+    optional int32 id = 1;
+    string name = 2;
+}
+
+message Collections {
+    repeated Collection categories = 1;
+}
+
+message GetCollectionResponse {
+    optional int32 id = 1;
+    string name = 2;
+    repeated int32 item_ids = 3;
+}
+
+message GetCollectionRequest {
+    int32 id = 1;
+}
+
+message AddItemToCollectionRequest {
+    int32 item_id = 1;
+    int32 collection_id = 2;
+}
+
+message RemoveItemFromCollectionRequest {
+    int32 item_id = 1;
+    int32 collection_id = 2;
+}
+
+
+

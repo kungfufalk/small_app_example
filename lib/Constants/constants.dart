@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const baseUri = 'http://192.168.100.25:8080';
-const collectionUri = '$baseUri/collection';
-const itemUri = '$baseUri/item';
-const categoryUri = '$baseUri/category';
+const baseUriDeprecated = 'http://192.168.100.25:8080';
+const collectionUri = '$baseUriDeprecated/collection';
+const itemUri = '$baseUriDeprecated/item';
+const categoryUri = '$baseUriDeprecated/category';
 const itemsCrossAxis = 3;
+
+const hostAddress = 'http://192.168.178.59';
+const grpcPort = 50051;
 
 final ThemeData myTheme = ThemeData(
   primarySwatch: Colors.blue,

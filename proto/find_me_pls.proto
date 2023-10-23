@@ -1,0 +1,32 @@
+syntax = "proto3";
+package find_me_pls;
+
+
+message Empty {
+
+}
+
+import "item_types.proto";
+import "category_types.proto";
+import "collection_types.proto";
+
+
+service FindMePls {
+    rpc NewItem(Item) returns (Item);
+    rpc GetAllItems(Empty) returns (Items);
+    rpc GetItem(GetItemRequest) returns (Item);
+    rpc QueryItems(QueryItemsRequest) returns (Items);
+    rpc DeleteItem(DeleteItemRequest) returns (Item);
+
+    rpc NewCategory(Category) returns (Category);
+    rpc GetAllCategories(Empty) returns (Categories);
+
+    rpc NewCollection(Collection) returns (Collection);
+    rpc GetAllCollections(Empty) returns (Collections);
+    rpc GetCollection(GetCollectionRequest) returns (Collection);
+    rpc AddItemToCollection(AddItemToCollectionRequest) returns (Empty);
+    rpc RemoveItemFromCollection(RemoveItemFromCollectionRequest) returns (Empty);
+
+}
+
+
