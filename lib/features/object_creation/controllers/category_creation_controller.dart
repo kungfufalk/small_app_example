@@ -7,12 +7,15 @@ part 'category_creation_controller.g.dart';
 @riverpod
 class CategoryCreationController extends _$CategoryCreationController {
   @override
-  FutureOr<Category?> build() async {}
+  FutureOr<Category?> build() async {
+    return null;
+  }
 
   Future<void> createCategory(Category category) async {
     state = const AsyncLoading();
     try {
-      final response = await ref.read(clientProvider).newCategory(category);
+      final response = await ref.read(clientProvider)!.newCategory(category);
+      // ref.read(provider)
       state = AsyncData(response);
     } catch (e, stackTrace) {
       state = AsyncError(e, stackTrace);

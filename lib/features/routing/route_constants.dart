@@ -1,15 +1,20 @@
+///Todo: group routes with names and titles into classes
+
 class AppRoutes {
   static const home = '/';
   static const camera = '/camera';
-  static const item = '/item';
   static const collection = '/collection';
-  static const category = '/category';
-  static const categoryDetails = '$category/details';
-  static const categoryCreation = '$category/creation';
 
-  static const browse = '/browse';
-  static const create = '/create';
+  static const browse = '/';
   static const settings = '/settings';
+
+  static const create = '/create';
+  static const categoryCreation = 'category';
+  static const collectionCreation = 'collection';
+  static const itemCreation = 'item';
+  static const categoryFullPath = '$create/$categoryCreation';
+  static const collectionFullPath = '$create/$collectionCreation';
+  static const itemFullPath = '$create/$itemCreation';
 }
 
 class RouteNames {

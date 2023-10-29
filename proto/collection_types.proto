@@ -4,10 +4,11 @@ package find_me_pls;
 message Collection {
     optional int32 id = 1;
     string name = 2;
+    optional bytes thumbnail = 3;
 }
 
 message Collections {
-    repeated Collection categories = 1;
+    repeated Collection collections = 1;
 }
 
 message GetCollectionResponse {

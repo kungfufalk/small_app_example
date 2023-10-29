@@ -1,15 +1,13 @@
 syntax = "proto3";
 package find_me_pls;
 
-
-message Empty {
-
-}
-
 import "item_types.proto";
 import "category_types.proto";
 import "collection_types.proto";
 
+message Empty {
+
+}
 
 service FindMePls {
     rpc NewItem(Item) returns (Item);
@@ -28,5 +26,3 @@ service FindMePls {
     rpc RemoveItemFromCollection(RemoveItemFromCollectionRequest) returns (Empty);
 
 }
-
-
