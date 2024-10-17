@@ -1,15 +1,14 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:small_app_example/Extensions/async_value_ui.dart';
 import 'package:small_app_example/features/basic_widgets/async_value_widget.dart';
 import 'package:small_app_example/features/camera/camera_provider.dart';
 import 'package:small_app_example/features/object_creation/controllers/collection_creation_controller.dart';
 import 'package:small_app_example/features/object_creation/widgets/image_thumbnail.dart';
-import 'package:small_app_example/features/routing/route_constants.dart';
 import 'package:small_app_example/generated/collection_types.pb.dart';
+
+import '../../camera/camera_screen.dart';
 
 class CollectionCreationView extends ConsumerWidget {
   CollectionCreationView({super.key});
@@ -19,7 +18,7 @@ class CollectionCreationView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(collectionCreationControllerProvider);
-    final imagePath = ref.watch(imagePathProvider);
+    final picturePath = ref.watch(picturePathProvider);
     ref.listen(
       (collectionCreationControllerProvider),
       (previous, next) {
@@ -43,15 +42,11 @@ class CollectionCreationView extends ConsumerWidget {
             IconButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CameraScreen(
-                        CameraController(
-                          ref.read(cameraProvider)!,
-                          ResolutionPreset.high,
-                        ),
-                      ),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CameraScreen(),
+                  ),
+                );
               },
               icon: const Icon(Icons.check),
             ),
@@ -74,7 +69,7 @@ class CollectionCreationView extends ConsumerWidget {
                 child: Column(
                   children: [
                     ImageThumbnail(
-                      imagePath: imagePath,
+                      imagePath: picturePath,
                     ),
                     const SizedBox(height: 16.0),
                     ElevatedButton(
@@ -83,7 +78,12 @@ class CollectionCreationView extends ConsumerWidget {
                         maximumSize: const Size(150, 48.0),
                       ),
                       onPressed: () {
-                        ref.read(imagePathProvider);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CameraScreen(),
+                          ),
+                        );
                       },
                       child: Row(
                         children: [

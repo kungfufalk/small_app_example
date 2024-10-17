@@ -7,3 +7,17 @@ part 'camera_provider.g.dart';
 CameraDescription? camera(CameraRef ref) {
   return null;
 }
+
+@riverpod
+class PicturePath extends _$PicturePath {
+  @override
+  String? build() {
+    return null;
+  }
+  void setPath(String path) {
+    state = path;
+  }
+  void clearPath() {
+    state = null;
+  }
+}

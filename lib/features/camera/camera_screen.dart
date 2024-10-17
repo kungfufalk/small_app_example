@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:small_app_example/features/routing/route_constants.dart';
 import 'camera_provider.dart';
 
 class CameraScreen extends ConsumerStatefulWidget {
@@ -94,15 +94,26 @@ class _CameraScreenState extends ConsumerState<CameraScreen> {
 }
 
 // A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
+class DisplayPictureScreen extends ConsumerWidget {
   final String imagePath;
 
   const DisplayPictureScreen({super.key, required this.imagePath});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
+      appBar: AppBar(
+        title: const Text('Display the Picture'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                ref.read(picturePathProvider.notifier).setPath(imagePath);
+                Navigator.popUntil(
+                    context, (route) => route.toString() != AppRoutes.camera);
+              },
+              icon: const Icon(Icons.check))
+        ],
+      ),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Image.file(File(imagePath)),
